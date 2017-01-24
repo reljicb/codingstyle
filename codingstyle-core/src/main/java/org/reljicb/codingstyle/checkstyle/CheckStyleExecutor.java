@@ -14,24 +14,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CheckStyleExecutor {
-    private static String reformatPath (final String path) {
+
+    final String CHECK_STYLE_PATH = reformatPath(this.getClass().getClassLoader().getResource("./lib").getPath());
+
+    final String RULES_XML_PATH = reformatPath(this.getClass().getClassLoader().getResource("./rules").getPath());
+
+    private static String reformatPath(final String path) {
         if (File.separator.equals("\\")) {
             return path.replace("/C:/", "c:\\").replace("/", "\\");
         }
         return path;
     }
 
-    public List<TargetFile> run () throws IOException, InterruptedException {
-        final String CHECK_STYLE_PATH = reformatPath(this.getClass().getClassLoader().getResource("./lib").getPath());
-        final String RULES_XML_PATH = reformatPath(this.getClass().getClassLoader().getResource("./rules").getPath());
-
-        final String ACC_DETAILS_PATH = "C:\\Users\\ER266\\development\\workspace\\rbcone-ao-accdetail\\rbcone-ao-account-details-web\\src\\main\\java";
-        final String CODINGSTYLE_GIT_PATH = "C:\\TEMP\\codingstyle-git\\src";
-        final String FULL_STACK_VALIDATION_PATH = "/Users/bojanreljic/development/workspace/full-stack-validation/src/main/java/";
-        final String JAVA_FILE_PATH = ACC_DETAILS_PATH;
-
-        //        final String OUTPUT_FILE_PATH = "/Users/bojanreljic/tmp/out.txt";
-
+    public List<TargetFile> run(final String sourcesPath)
+            throws IOException, InterruptedException {
         final String javaHome = System.getProperty("java.home");
 
         ByteArrayOutputStream stdout = new ByteArrayOutputStream();
@@ -54,7 +50,7 @@ public class CheckStyleExecutor {
                     .addArgument("-c")
                     .addArgument(String.format("%s/google_checks.xml", RULES_XML_PATH))
                     .addArgument("-f").addArgument("xml")
-                    .addArgument(JAVA_FILE_PATH)
+                    .addArgument(sourcesPath)
             );
         } finally {
             System.out.println(String.format("exit code: %d", exitValue));

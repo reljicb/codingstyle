@@ -18,20 +18,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GitManager {
-    private static final String BB_BACKBONE = "/Users/bojanreljic/development/workspace/bb-backbone";
-    private static final String TEST = "/Users/bojanreljic/tmp/git-test/.git";
-    private static final String MOCK_DATA = "C:\\Users\\ER266\\development\\workspace\\rbcone-ao-mock-data";
-
-//    private static final String REPO_PATH = TEST;
-//    private static final String REPO_PATH = BB_BACKBONE;
-    private static final String REPO_PATH = MOCK_DATA;
 
     final Git git;
 
     final Repository repo;
 
-    public GitManager() throws IOException {
-        repo = new FileRepository(REPO_PATH + File.separator + ".git");
+    public GitManager(final String repoPath) throws IOException {
+        repo = new FileRepository(repoPath + File.separator + ".git");
 
         git = new Git(repo);
     }

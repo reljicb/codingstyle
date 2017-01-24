@@ -21,7 +21,7 @@ public class CheckStyle {
     @JacksonXmlProperty(localName = "version")
     private String version;
 
-    public List<TargetFile> getTargetFiles () {
+    public List<TargetFile> getTargetFiles() {
         if (targetFiles == null)
             return Lists.newArrayList();
 
@@ -30,7 +30,7 @@ public class CheckStyle {
                 .collect(Collectors.toList());
     }
 
-    public String getVersion () {
+    public String getVersion() {
         return version;
     }
 }

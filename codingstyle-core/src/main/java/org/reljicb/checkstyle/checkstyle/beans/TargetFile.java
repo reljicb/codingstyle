@@ -16,7 +16,7 @@ public class TargetFile {
     @JacksonXmlProperty(localName = "name")
     private String name;
 
-    public List<CSError> getErrors () {
+    public List<CSError> getErrors() {
         if (errors == null)
             return Lists.newArrayList();
 
@@ -25,7 +25,7 @@ public class TargetFile {
                 .collect(Collectors.toList());
     }
 
-    public String getName () {
+    public String getName() {
         return name;
     }
 }

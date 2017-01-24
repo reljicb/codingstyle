@@ -19,28 +19,28 @@ public class CSError {
     @JacksonXmlProperty(localName = "source")
     private String source;
 
-    public int getColumn () {
+    public int getColumn() {
         return column;
     }
 
-    public int getLine () {
+    public int getLine() {
         return line;
     }
 
-    public String getMessage () {
+    public String getMessage() {
         return message;
     }
 
-    public String getSeverity () {
+    public String getSeverity() {
         return severity;
     }
 
-    public String getSource () {
+    public String getSource() {
         return source;
     }
 
     @Override
-    public String toString () {
+    public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("line", line)
                 .add("column", column)
