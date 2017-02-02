@@ -27,7 +27,6 @@
     </properties>
 
     <modules>
-        <module>codingstyle-core</module>
         <module>codingstyle-git</module>
         <module>codingstyle-web</module>
     </modules>

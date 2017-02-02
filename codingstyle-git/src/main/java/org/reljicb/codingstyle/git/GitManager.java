@@ -2,10 +2,12 @@ package org.reljicb.codingstyle.git;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
+import com.spinn3r.log5j.Logger;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.DepthWalk;
@@ -18,6 +20,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GitManager {
+    private static final Logger log = Logger.getLogger();
 
     final Git git;
 
@@ -29,18 +32,29 @@ public class GitManager {
         git = new Git(repo);
     }
 
-    public Ref checkoutCommit(RevCommit commit) throws GitAPIException {
-        return git.checkout().setName(commit.getName()).call();
+    public Ref checkoutCommit(String commitName) throws GitAPIException {
+        return git.checkout().setName(commitName).call();
+    }
+
+    public void checkoutRoot(final String branchName) throws GitAPIException {
+        git.checkout().setName(branchName).call();
+    }
+
+    public ObjectId getCurrentCommit() throws IOException {
+        return repo.resolve(Constants.HEAD);
     }
 
     public List<RevCommit> walkBranch(final String branchName) throws IOException, GitAPIException {
+        ObjectId id = repo.resolve(Constants.HEAD);
+        String currentCommit = id.getName();
+
         DepthWalk.RevWalk walk = new DepthWalk.RevWalk(repo, Integer.MAX_VALUE);
 
         List<Ref> branches = git.branchList().call();
-        System.out.println(String.format("List of all branches: %s",
+        log.debug("List of all branches: %s",
                 Joiner.on(", ").join(branches.stream()
                         .map(branche -> branche.getName())
-                        .collect(Collectors.toList()))));
+                        .collect(Collectors.toList())));
 
         final String BRANCH_MASTER = branches.stream()
                 .filter(b -> b.getName().contains(branchName))
@@ -80,6 +94,8 @@ public class GitManager {
                 //                System.out.println(String.format("%s %s", commit.getName(), commit.getShortMessage().trim()));
             }
         }
+
+        //        git.checkout().setName(currentCommit).call();
 
         return ret;
     }

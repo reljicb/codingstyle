@@ -1,10 +1,12 @@
 package org.reljicb.codingstyle.web.config;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 
 @ComponentScan(basePackages = { "org.reljicb.codingstyle.web" })
+@EntityScan(basePackages = { "org.reljicb.codingstyle.web.entity" })
 @Configuration
 @EnableWebMvc
 public class CodingstyleConfiguration extends WebMvcConfigurerAdapter {

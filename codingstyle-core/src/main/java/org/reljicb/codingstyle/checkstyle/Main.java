@@ -1,7 +1,7 @@
 //package org.reljicb.codingstyle.checkstyle;
 //
-//import org.reljicb.checkstyle.checkstyle.beans.CSError;
-//import org.reljicb.checkstyle.checkstyle.beans.TargetFile;
+//import org.reljicb.codingstyle.web.beans.CSError;
+//import org.reljicb.codingstyle.web.beans.TargetFile;
 //
 //import java.io.IOException;
 //import java.util.List;
