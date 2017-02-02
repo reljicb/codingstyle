@@ -7,6 +7,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = ErrorEntity.TABLE_NAME)
 public class ErrorEntity {
+    public static final String COMMIT_FK_COLUMN_NAME = "commit_name_id";
+
     public static final String TABLE_NAME = "file_error";
 
     public static ErrorEntity create(CSError csError, FileEntity fileEntity, ErrorTypeEntity errorType,
@@ -19,13 +21,7 @@ public class ErrorEntity {
                 .setCommit(commit);
     }
 
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Id
-    private Integer id;
-
     private Integer column;
-
-    public static final String COMMIT_FK_COLUMN_NAME = "commit_name_id";
 
     @ManyToOne
     @JoinColumn(name = COMMIT_FK_COLUMN_NAME)
@@ -36,6 +32,10 @@ public class ErrorEntity {
 
     @ManyToOne
     private FileEntity fileEntity;
+
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id
+    private Integer id;
 
     private Integer line;
 
