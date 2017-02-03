@@ -10,16 +10,19 @@
 //public class Main {
 //    private static final String BB_BACKBONE = "/Users/bojanreljic/development/workspace/bb-backbone";
 //
-//    private static final String REPO_PATH = BB_BACKBONE;
-//
 //    private static final String TEST = "/Users/bojanreljic/tmp/git-test/.git";
 //
-//    public static void main (String[] args) throws IOException, GitAPIException {
-//        GitManager app = new GitManager();
+//    private static final String REPO_PATH = BB_BACKBONE;
+//
+//    public static void main(String[] args) throws IOException, GitAPIException {
+//        GitManager app = new GitManager(REPO_PATH);
 //
 //        List<RevCommit> commits = app.walkBranch("master");
 //        commits.stream()
-//                .forEach(c -> System.out.println(String.format("%s %s", c.getName(), c.getShortMessage().trim())));
+//                .forEach(c -> {
+//                    System.out.println(String.format("%s %s", c.getName(), c.getShortMessage().trim()));
+//                    c.getAuthorIdent().get§
+//                });
 //
 //        for (RevCommit commit : commits) {
 //            Ref ref = app.checkoutCommit(commit);

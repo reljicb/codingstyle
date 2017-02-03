@@ -3,15 +3,10 @@ package org.reljicb.codingstyle.web.rest;
 import com.google.common.util.concurrent.UncheckedExecutionException;
 import com.spinn3r.log5j.Logger;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.reljicb.codingstyle.web.entity.CommitEntity;
-import org.reljicb.codingstyle.web.entity.ErrorEntity;
-import org.reljicb.codingstyle.web.entity.ErrorTypeEntity;
-import org.reljicb.codingstyle.web.entity.FileEntity;
-import org.reljicb.codingstyle.web.repository.CommitRepository;
-import org.reljicb.codingstyle.web.repository.ErrorEntityRepository;
-import org.reljicb.codingstyle.web.repository.ErrorTypeRepository;
-import org.reljicb.codingstyle.web.repository.FileRepository;
+import org.reljicb.codingstyle.web.entity.*;
+import org.reljicb.codingstyle.web.repository.*;
 import org.reljicb.codingstyle.web.service.CheckstyleService;
 import org.reljicb.codingstyle.web.service.GitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +32,7 @@ public class CallbackController {
     private CommitRepository commitRepo;
 
     @Autowired
-    private ErrorEntityRepository errorRepo;
+    private ErrorRepository errorRepo;
 
     @Autowired
     private ErrorTypeRepository errorTypeRepo;
@@ -47,6 +42,9 @@ public class CallbackController {
 
     @Autowired
     private GitService gitService;
+
+    @Autowired
+    private AuthorRepository authorRepo;
 
     @Transactional
     @RequestMapping(value = "/callback",
@@ -71,7 +69,17 @@ public class CallbackController {
                         return;
                     }
 
-                    commitEntity = commitRepo.save(CommitEntity.create(commit.getName()));
+                    PersonIdent pi = commit.getAuthorIdent();
+                    AuthorEntity author = authorRepo.getByNameAndEmail(pi.getName(), pi.getEmailAddress());
+                    if (author == null) {
+                        author = new AuthorEntity()
+                                .setName(pi.getName())
+                                .setEmail(pi.getEmailAddress());
+                        author = authorRepo.save(author);
+                    }
+
+                    commitEntity = commitRepo.save(
+                            CommitEntity.create(commit.getName(), commit.getCommitTime(), author));
                     final CommitEntity commitEntityFinal = commitEntity;
 
                     try {

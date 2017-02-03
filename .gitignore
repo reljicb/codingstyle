@@ -1,4 +1,5 @@
 target/
+codingstyle-web/target/
 .mvn/
 
 ### STS ###
@@ -22,3 +23,5 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+*.mv.db

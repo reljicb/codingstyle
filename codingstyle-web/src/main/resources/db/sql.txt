@@ -1,0 +1,42 @@
+
+all errors and their instances
+========================================================================
+select e.id, e.line, e.column, f.name as file_name, et.message as error_type, c.name as commit, a.name as author 
+from error e
+inner join error_type et
+ on e.error_type_id = et.id
+inner join file f
+ on e.file_entity_id = f.id
+inner join commit c
+ on e.commit_id = c.id
+inner join author a
+ on c.author_id = a.id
+
+
+all unique errors
+========================================================================
+select distinct e.line, e.column, f.name as file_name, et.message as error_type 
+from error e
+inner join error_type et
+ on e.error_type_id = et.id
+inner join file f
+ on e.file_entity_id = f.id
+
+
+all commits and their authors for a single error in a file
+========================================================================
+select a.name, c.name, e.line, e.column, f.id as file_id, f.name as file_name, et.id as error_type_id, et.message as error_type 
+from error e 
+inner join error_type et 
+ on e.error_type_id = et.id 
+inner join file f 
+ on e.file_entity_id = f.id 
+inner join commit c
+ on e.commit_id = c.id
+inner join author a
+ on c.author_id = a.id
+where e.line = 78 
+    and e.column = 0
+    and f.id = 20
+    and et.id = 37
+

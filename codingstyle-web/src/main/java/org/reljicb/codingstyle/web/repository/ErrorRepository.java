@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface ErrorEntityRepository extends CrudRepository<ErrorEntity, Integer> {
+public interface ErrorRepository extends CrudRepository<ErrorEntity, Integer> {
 
     String query = "select count(e.commit) as error_count, e.commit.name "
             + "from ErrorEntity e "
