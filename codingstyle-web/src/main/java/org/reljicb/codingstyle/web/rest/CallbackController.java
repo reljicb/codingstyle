@@ -12,7 +12,6 @@ import org.reljicb.codingstyle.web.service.GitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +20,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping(AbstractController.API_PATH)
 public class CallbackController {
     private static final Logger log = Logger.getLogger();
 
@@ -46,7 +45,6 @@ public class CallbackController {
     @Autowired
     private AuthorRepository authorRepo;
 
-    @Transactional
     @RequestMapping(value = "/callback",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
